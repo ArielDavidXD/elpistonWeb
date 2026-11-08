@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taller El Pistón</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="aviso" hidden></div>
+
+  <section id="login" hidden>
+    <form id="form-login">
+      <h1>Taller El Pistón</h1>
+      <label>Correo <input type="email" id="email" required autocomplete="username"></label>
+      <label>Contraseña <input type="password" id="clave" required autocomplete="current-password"></label>
+      <button>Entrar</button>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <header>
+      <strong>El Pistón</strong>
+      <nav id="menu"></nav>
+      <span id="usuario"></span>
+      <button id="salir" class="sec">Salir</button>
+    </header>
+    <main id="contenido"></main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

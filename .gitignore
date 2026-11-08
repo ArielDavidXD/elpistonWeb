@@ -1,0 +1,10 @@
+pocketbase
+pocketbase.exe
+pb_data/
+*.zip
+CHANGELOG.md
+LICENSE.md
+.DS_Store
+Thumbs.db
+.vscode/
+node_modules/

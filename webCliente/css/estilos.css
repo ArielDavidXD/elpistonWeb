@@ -1,0 +1,38 @@
+:root { --azul:#1f4e79; --gris:#f3f5f7; --borde:#d5dae0; --texto:#222; }
+[hidden] { display: none !important; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:system-ui,sans-serif; color:var(--texto); background:var(--gris); }
+header { display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:10px 16px; background:var(--azul); color:#fff; }
+nav { display:flex; flex-wrap:wrap; gap:4px; flex:1; }
+nav a { color:#fff; text-decoration:none; padding:6px 10px; border-radius:4px; }
+nav a.activo, nav a:hover { background:rgba(255,255,255,.2); }
+main { max-width:960px; margin:0 auto; padding:16px; }
+h2 { margin-top:0; }
+section.caja, .caja { background:#fff; border:1px solid var(--borde); border-radius:6px; padding:14px; margin-bottom:16px; }
+table { width:100%; border-collapse:collapse; }
+th, td { text-align:left; padding:8px; border-bottom:1px solid var(--borde); }
+.tabla { overflow-x:auto; }
+input, select, textarea, button { font:inherit; padding:8px; border:1px solid var(--borde); border-radius:4px; }
+label { display:block; margin-bottom:10px; }
+label input, label select, label textarea { display:block; width:100%; margin-top:4px; }
+button { background:var(--azul); color:#fff; border:0; cursor:pointer; }
+button.sec { background:#fff; color:var(--azul); border:1px solid var(--azul); }
+button.peligro { background:#b3261e; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline:3px solid #f2a900; }
+.fila { display:flex; flex-wrap:wrap; gap:8px; align-items:end; }
+.fila > * { flex:1; min-width:130px; }
+.fila button { flex:0 0 auto; }
+.barra { display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.estado { padding:2px 8px; border-radius:10px; font-size:.85em; background:#ddd; white-space:nowrap; }
+.estado.recibida { background:#e0e7ff; } .estado.en_diagnostico { background:#fff3c4; }
+.estado.en_reparacion { background:#ffd9b3; } .estado.lista { background:#c9f0d2; }
+.estado.entregada { background:#b8d8ff; } .estado.cancelada { background:#f5c2c0; }
+.bajo { color:#b3261e; font-weight:bold; }
+.totales { font-size:1.1em; }
+.vacio { color:#667; padding:10px 0; }
+#aviso { position:fixed; top:10px; left:50%; transform:translateX(-50%); padding:10px 18px; border-radius:6px; color:#fff; z-index:9; }
+#aviso.ok { background:#1e7a3c; } #aviso.error { background:#b3261e; }
+#login { min-height:100vh; display:grid; place-items:center; padding:16px; }
+#form-login { background:#fff; padding:24px; border-radius:8px; border:1px solid var(--borde); width:100%; max-width:340px; }
+#form-login button { width:100%; }
+@media (max-width:600px) { th, td { padding:6px 4px; font-size:.92em; } }
