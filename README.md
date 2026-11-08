@@ -4,23 +4,19 @@ Sistema web para llevar el trabajo diario de un taller mecánico de barrio: clie
 
 Proyecto individual de la asignatura **Programación para Dispositivos Móviles**.
 
-- **Autor:** COMPLETAR: nombre
-- **Profesor:** Ing. Roilán Rodríguez Castillo
-
 ## Tecnologías
 
-|Parte|Tecnología|
+| Parte | Tecnología |
 |---|---|
-|Servidor|[PocketBase](https://pocketbase.io) (base de datos SQLite, API REST, autenticación y reglas de acceso)|
-|Cliente|HTML, CSS y JavaScript puros, con el SDK oficial de PocketBase (módulos ES)|
+| Servidor | [PocketBase](https://pocketbase.io) (base de datos SQLite, API REST, autenticación y reglas de acceso) |
+| Cliente | HTML, CSS y JavaScript puros, con el SDK oficial de PocketBase (módulos ES) |
 
 ## Estructura del repositorio
 
 ```
 taller-el-piston/
 ├── servidor/
-│   ├── pb_migrations/     colecciones, campos y reglas (se aplican solos al arrancar)
-│   └── pb_hooks/          (opcional) lógica del servidor
+│   └── pb_migrations/     colecciones, campos y reglas (se aplican solos al arrancar)
 ├── cliente/
 │   ├── index.html
 │   ├── css/estilos.css
@@ -34,35 +30,31 @@ taller-el-piston/
 ## Cómo ejecutar el proyecto
 
 ### Requisitos
-
-- El ejecutable de PocketBase para tu sistema, descargado de https://pocketbase.io/docs/ (versión usada: COMPLETAR: versión).
+- El ejecutable de PocketBase para tu sistema, descargado de https://pocketbase.io/docs/ (versión usada: VERSIÓN AQUÍ, por ejemplo 0.30.0).
 - Un navegador moderno y la extensión **Live Server** de VS Code (o cualquier servidor estático).
 - Conexión a internet, porque el SDK se carga desde un CDN (jsdelivr).
 
 ### 1. Servidor
-
 1. Descomprime el ejecutable dentro de la carpeta `servidor/`.
 2. Abre una terminal en esa carpeta y ejecuta:
-    - Windows: `pocketbase.exe serve`
-    - Mac/Linux: `./pocketbase serve`
+   - Windows: `pocketbase.exe serve`
+   - Mac/Linux: `./pocketbase serve`
 3. Al arrancar, PocketBase aplica automáticamente las migraciones de `pb_migrations/` y crea todas las colecciones con sus reglas.
 4. Abre el panel de administración en http://127.0.0.1:8090/_/ y crea tu cuenta de superusuario (la primera vez te lo pide).
 
 ### 2. Usuarios de prueba
-
 Las cuentas no vienen en el repositorio (la base de datos no se sube). Créalas en el panel: **Collections → users → New record**, con `name`, `email`, contraseña y `rol`:
 
-|Nombre|Correo|Rol|
+| Nombre | Correo | Rol |
 |---|---|---|
-|Carlos|dueno@taller.com|`dueno`|
-|Ana|recepcion@taller.com|`recepcion`|
-|Pedro|mecanico1@taller.com|`mecanico`|
-|Luis|mecanico2@taller.com|`mecanico`|
+| Carlos | dueno@taller.com | `dueno` |
+| Ana | recepcion@taller.com | `recepcion` |
+| Pedro | mecanico1@taller.com | `mecanico` |
+| Luis | mecanico2@taller.com | `mecanico` |
 
 El valor de `rol` debe escribirse exactamente así (minúsculas y sin tildes). Usa la contraseña que prefieras (mínimo 8 caracteres).
 
 ### 3. Cliente
-
 1. Abre la carpeta `cliente/` en VS Code.
 2. Clic derecho sobre `index.html` → **Open with Live Server**.
 3. Entra con alguno de los usuarios anteriores.
@@ -78,16 +70,16 @@ clientes ──< vehiculos ──< ordenes ──< trabajos
                               └── mecanico (users)
 ```
 
-|Colección|Campos principales|
+| Colección | Campos principales |
 |---|---|
-|`users`|name, email, **rol** (dueno / recepcion / mecanico)|
-|`clientes`|nombre, telefono, direccion (opcional)|
-|`vehiculos`|cliente, matricula, marca, modelo, anio, kilometraje|
-|`repuestos`|nombre, codigo, precio_venta, existencias, stock_minimo|
-|`ordenes`|vehiculo, mecanico, fecha, problema, estado, kilometraje|
-|`trabajos`|orden, descripcion, precio (mano de obra)|
-|`uso_repuestos`|orden, repuesto, cantidad, precio_unitario|
-|`pagos`|orden, monto, fecha, metodo|
+| `users` | name, email, **rol** (dueno / recepcion / mecanico) |
+| `clientes` | nombre, telefono, direccion (opcional) |
+| `vehiculos` | cliente, matricula, marca, modelo, anio, kilometraje |
+| `repuestos` | nombre, codigo, precio_venta, existencias, stock_minimo |
+| `ordenes` | vehiculo, mecanico, fecha, problema, estado, kilometraje |
+| `trabajos` | orden, descripcion, precio (mano de obra) |
+| `uso_repuestos` | orden, repuesto, cantidad, precio_unitario |
+| `pagos` | orden, monto, fecha, metodo |
 
 Estados de una orden: `recibida`, `en_diagnostico`, `en_reparacion`, `lista`, `entregada`, `cancelada`.
 
@@ -117,31 +109,30 @@ Estados de una orden: `recibida`, `en_diagnostico`, `en_reparacion`, `lista`, `e
 
 ## Reglas de acceso por rol
 
-|Colección|Dueño|Recepción|Mecánico|
+| Colección | Dueño | Recepción | Mecánico |
 |---|---|---|---|
-|`users`|todo|ver|ver (para asignar mecánicos)|
-|`clientes`, `vehiculos`|todo|ver, crear, editar|solo ver|
-|`repuestos`|todo|ver, crear, editar|ver y descontar existencias|
-|`ordenes`|todo|ver, crear, editar|ver y cambiar el estado **solo de las suyas**|
-|`trabajos`, `uso_repuestos`|todo|ver, crear, editar|ver y crear **solo en sus órdenes**|
-|`pagos`|todo|ver, crear, editar|solo ver los de sus órdenes|
+| `users` | todo | ver | ver (para asignar mecánicos) |
+| `clientes`, `vehiculos` | todo | ver, crear, editar | solo ver |
+| `repuestos` | todo | ver, crear, editar | ver y descontar existencias |
+| `ordenes` | todo | ver, crear, editar | ver y cambiar el estado **solo de las suyas** |
+| `trabajos`, `uso_repuestos` | todo | ver, crear, editar | ver y crear **solo en sus órdenes** |
+| `pagos` | todo | ver, crear, editar | solo ver los de sus órdenes |
 
 Solo el dueño puede borrar registros (y crear usuarios). Un usuario no puede cambiarse su propio rol. Las reglas exactas están en `servidor/pb_migrations/`.
 
 ## Pantallas del cliente
 
-|Pantalla|Quién la ve|Qué permite|
+| Pantalla | Quién la ve | Qué permite |
 |---|---|---|
-|Login|todos|Iniciar sesión; el menú cambia según el rol|
-|Panel|dueño|Órdenes abiertas por estado, carga por mecánico, repuestos por agotarse y facturación por período|
-|Órdenes|todos (el mecánico solo las suyas)|Lista con filtro por estado y alta de órdenes|
-|Detalle de orden|todos|Cambiar estado, anotar trabajos y repuestos, registrar pagos, ver total, pagado y saldo|
-|Clientes|recepción y dueño|Búsqueda, alta y ficha con vehículos, historial y saldo|
-|Repuestos|recepción y dueño|Inventario con alerta de stock bajo y alta de repuestos|
-|Deudores|recepción y dueño|Clientes con saldo pendiente, de mayor a menor|
+| Login | todos | Iniciar sesión; el menú cambia según el rol |
+| Panel | dueño | Órdenes abiertas por estado, carga por mecánico, repuestos por agotarse y facturación por período |
+| Órdenes | todos (el mecánico solo las suyas) | Lista con filtro por estado y alta de órdenes |
+| Detalle de orden | todos | Cambiar estado, anotar trabajos y repuestos, registrar pagos, ver total, pagado y saldo |
+| Clientes | recepción y dueño | Búsqueda, alta y ficha con vehículos, historial y saldo |
+| Repuestos | recepción y dueño | Inventario con alerta de stock bajo y alta de repuestos |
+| Deudores | recepción y dueño | Clientes con saldo pendiente, de mayor a menor |
 
 ### Experiencia de usuario
-
 - Diseño adaptable (computadora y teléfono).
 - Colores por estado de la orden.
 - Confirmación antes de cancelar una orden.
@@ -151,14 +142,14 @@ Solo el dueño puede borrar registros (y crear usuarios). Un usuario no puede ca
 
 ## Qué necesita saber el dueño y dónde lo ve
 
-|Necesidad|Dónde|
+| Necesidad | Dónde |
 |---|---|
-|Órdenes abiertas y su estado|Panel y Órdenes|
-|Trabajo asignado a cada mecánico|Panel (carga por mecánico)|
-|Historial de un cliente y de un vehículo|Ficha del cliente|
-|Cuánto debe cada cliente|Deudores|
-|Repuestos por agotarse|Repuestos y Panel|
-|Facturación de un período|Panel|
+| Órdenes abiertas y su estado | Panel y Órdenes |
+| Trabajo asignado a cada mecánico | Panel (carga por mecánico) |
+| Historial de un cliente y de un vehículo | Ficha del cliente |
+| Cuánto debe cada cliente | Deudores |
+| Repuestos por agotarse | Repuestos y Panel |
+| Facturación de un período | Panel |
 
 ## Limitaciones y mejoras futuras
 
@@ -170,15 +161,26 @@ Solo el dueño puede borrar registros (y crear usuarios). Un usuario no puede ca
 
 ## Capturas
 
-Las capturas de la aplicación en uso están en la carpeta `capturas/`.
+Las capturas de la aplicación en uso están en la carpeta [`capturas/`](capturas/).
 
-|||
+### Inicio de sesión y panel del dueño
+
+| Login | Panel del dueño |
 |---|---|
-|Login|Panel|
-|Órdenes|Detalle de orden|
-|Clientes|Repuestos|
-|Deudores|Vista del mecánico en móvil|#   e l p i s t o n W e b  
- #   e l p i s t o n W e b  
- #   e l p i s t o n W e b  
- #   e l p i s t o n W e b  
- 
+| ![Login](capturas/01-login.png) | ![Panel](capturas/02-panel.png) |
+
+### Órdenes de servicio
+
+| Lista de órdenes | Detalle de una orden |
+|---|---|
+| ![Órdenes](capturas/03-ordenes.png) | ![Detalle de orden](capturas/04-detalle-orden.png) |
+
+### Clientes, repuestos y deudores
+
+| Clientes | Repuestos |
+|---|---|
+| ![Clientes](capturas/05-clientes.png) | ![Repuestos](capturas/06-repuestos.png) |
+
+| Deudores | Vista del mecánico en el móvil |
+|---|---|
+| ![Deudores](capturas/07-deudores.png) | ![Vista del mecánico](capturas/08-mecanico-movil.png) |
